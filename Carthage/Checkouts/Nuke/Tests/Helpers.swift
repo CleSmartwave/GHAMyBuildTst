@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import Nuke
 import XCTest
@@ -19,37 +19,19 @@ enum Test {
         return try! Data(contentsOf: url)
     }
 
-    static func image(named name: String) -> PlatformImage {
-        let components = name.split(separator: ".")
-        return self.image(named: String(components[0]), extension: String(components[1]))
-    }
-
-    static func image(named name: String, extension ext: String) -> PlatformImage {
-        Test.container(named: name, extension: ext).image
-    }
-
-    static func container(named name: String, extension ext: String) -> ImageContainer {
-        let data = Test.data(name: name, extension: ext)
-        return ImageDecoders.Default().decode(data)!
-    }
-
     static let url = URL(string: "http://test.com")!
 
     static let data: Data = Test.data(name: "fixture", extension: "jpeg")
 
     // Test.image size is 640 x 480 pixels
     static var image: PlatformImage {
-        Test.image(named: "fixture", extension: "jpeg")
+        let data = Test.data(name: "fixture", extension: "jpeg")
+        return Nuke.ImageDecoder().decode(data: data)!
     }
 
-    // Test.image size is 640 x 480 pixels
-    static var container: ImageContainer {
-        ImageContainer(image: image)
-    }
-
-    static var request: ImageRequest {
-        ImageRequest(url: Test.url)
-    }
+    static let request = ImageRequest(
+        url: Test.url
+    )
 
     static let urlResponse = HTTPURLResponse(
         url: Test.url,
@@ -59,40 +41,10 @@ enum Test {
     )
 
     static let response = ImageResponse(
-        container: .init(image: Test.image),
+        image: Test.image,
         urlResponse: urlResponse,
-        cacheType: nil
+        scanNumber: nil
     )
-
-    static func save(_ image: PlatformImage) {
-        let url = try! FileManager.default
-            .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent(UUID().uuidString)
-            .appendingPathExtension("png")
-        print(url)
-        let data = ImageEncoders.ImageIO(type: .png, compressionRatio: 1).encode(image)!
-        try! data.write(to: url)
-    }
-}
-
-#if os(macOS)
-extension NSImage {
-    var cgImage: CGImage? {
-        cgImage(forProposedRect: nil, context: nil, hints: nil)
-    }
-}
-#endif
-
-extension CGImage {
-    var size: CGSize {
-        CGSize(width: width, height: height)
-    }
-}
-
-extension PlatformImage {
-    var sizeInPixels: CGSize {
-        cgImage!.size
-    }
 }
 
 extension String: Error {}

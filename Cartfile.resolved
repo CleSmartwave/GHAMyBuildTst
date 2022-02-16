@@ -1,4 +1,4 @@
-git "https://chromium.googlesource.com/webm/libwebp" "v1.1.0"
+git "https://chromium.googlesource.com/webm/libwebp" "v1.0.0"
 github "Alamofire/Alamofire" "4.9.1"
-github "kean/Nuke" "10.7.1"
-github "swph-mobile/Nuke-WebP-Plugin" "v6.0.1-fork"
+github "kean/Nuke" "8.4.1"
+github "swph-mobile/Nuke-WebP-Plugin" "ab2eba5a647d55e6acc7d3479d8950021f4a5411"

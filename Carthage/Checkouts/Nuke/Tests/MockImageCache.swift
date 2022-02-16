@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 @testable import Nuke
@@ -8,37 +8,25 @@ import Foundation
 class MockImageCache: ImageCaching {
     let queue = DispatchQueue(label: "com.github.Nuke.MockCache")
     var enabled = true
-    var images = [AnyHashable: ImageContainer]()
-    var readCount = 0
-    var writeCount = 0
-
+    var images = [AnyHashable: ImageResponse]()
+    
     init() {}
 
-    func resetCounters() {
-        readCount = 0
-        writeCount = 0
-    }
-
-    subscript(key: ImageCacheKey) -> ImageContainer? {
-        get {
-            queue.sync {
-                readCount += 1
-                return enabled ? images[key] : nil
-            }
-        }
-        set {
-            queue.sync {
-                writeCount += 1
-                if let image = newValue {
-                    if enabled { images[key] = image }
-                } else {
-                    images[key] = nil
-                }
-            }
+    func cachedResponse(for request: ImageRequest) -> ImageResponse? {
+        return queue.sync {
+            enabled ? images[ImageRequest.CacheKey(request: request)] : nil
         }
     }
 
-    func removeAll() {
-        images.removeAll()
+    func storeResponse(_ response: ImageResponse, for request: ImageRequest) {
+        queue.sync {
+            if enabled { images[ImageRequest.CacheKey(request: request)] = response }
+        }
+    }
+
+    func removeResponse(for request: ImageRequest) {
+        queue.sync {
+            images[ImageRequest.CacheKey(request: request)] = nil
+        }
     }
 }

@@ -1,18 +1,18 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 import Nuke
 
 class MockFailingDecoder: Nuke.ImageDecoding {
-    func decode(_ data: Data) -> ImageContainer? {
+    func decode(data: Data, isFinal: Bool) -> PlatformImage? {
         return nil
     }
 }
 
 class MockImageDecoder: ImageDecoding {
-    private let decoder = ImageDecoders.Default()
+    private let decoder = ImageDecoder()
 
     let name: String
 
@@ -20,12 +20,8 @@ class MockImageDecoder: ImageDecoding {
         self.name = name
     }
 
-    func decode(_ data: Data) -> ImageContainer? {
-        return decoder.decode(data)
-    }
-
-    func decodePartiallyDownloadedData(_ data: Data) -> ImageContainer? {
-        return decoder.decodePartiallyDownloadedData(data)
+    func decode(data: Data, isFinal: Bool) -> PlatformImage? {
+        return decoder.decode(data: data, isFinal: isFinal)
     }
 }
 
@@ -36,11 +32,7 @@ class MockAnonymousImageDecoder: ImageDecoding {
         self.closure = closure
     }
 
-    func decode(_ data: Data) -> ImageContainer? {
-        return closure(data, true).map { ImageContainer(image: $0) }
-    }
-
-    func decodePartiallyDownloadedData(_ data: Data) -> ImageContainer? {
-        return closure(data, false).map { ImageContainer(image: $0) }
+    func decode(data: Data, isFinal: Bool) -> PlatformImage? {
+        return closure(data, isFinal)
     }
 }

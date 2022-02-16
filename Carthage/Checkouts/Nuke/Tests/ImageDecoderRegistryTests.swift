@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import XCTest
 @testable import Nuke
@@ -53,32 +53,12 @@ final class ImageDecoderRegistryTests: XCTestCase {
         // Then
         XCTAssertTrue(decoder is ImageDecoder)
     }
-    
-    #if !os(watchOS)
-    func testDefaultRegistryDecodeVideo() throws {
-        // Given
-        let registry = ImageDecoderRegistry()
-        let data = Test.data(name: "video", extension: "mp4")
-        
-        // When
-        let context = ImageDecodingContext(request: Test.request, data: data, isCompleted: true, urlResponse: nil)
-        let decoder = registry.decoder(for: context)
-        let container = try XCTUnwrap(decoder?.decode(data))
-        
-        // Then
-        XCTAssertEqual(container.type, .m4v)
-        XCTAssertFalse(container.isPreview)
-        XCTAssertNotNil(container.data)
-        XCTAssertNotNil(container.asset)
-    }
-    #endif
 }
 
 private func _mockImageDecodingContext() -> ImageDecodingContext {
     return ImageDecodingContext(
         request: Test.request,
         data: Test.data(name: "fixture", extension: "jpeg"),
-        isCompleted: true,
         urlResponse: nil
     )
 }

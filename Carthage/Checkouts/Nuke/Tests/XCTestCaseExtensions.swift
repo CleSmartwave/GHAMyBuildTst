@@ -1,10 +1,9 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import XCTest
 import Foundation
-import Combine
 
 extension XCTestCase {
     @discardableResult
@@ -14,64 +13,6 @@ extension XCTestCase {
 
     func wait(_ timeout: TimeInterval = 10, handler: XCWaitCompletionHandler? = nil) {
         self.waitForExpectations(timeout: timeout, handler: handler)
-    }
-}
-
-// MARK: - Publishers
-
-@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-extension XCTestCase {
-    func expect<P: Publisher>(_ publisher: P) -> TestExpectationPublisher<P> {
-        TestExpectationPublisher(test: self, publisher: publisher)
-    }
-
-    func record<P: Publisher>(_ publisher: P) -> TestRecordedPublisher<P> {
-        let record = TestRecordedPublisher<P>()
-        publisher.sink(receiveCompletion: {
-            record.completion = $0
-        }, receiveValue: {
-            record.values.append($0)
-        }).store(in: &cancellables)
-        return record
-    }
-
-    private static var cancellablesAK = "TestExpectationPublisher.AssociatedKey"
-
-    fileprivate var cancellables: [AnyCancellable] {
-        get { (objc_getAssociatedObject(self, &XCTestCase.cancellablesAK) as? [AnyCancellable]) ?? [] }
-        set { objc_setAssociatedObject(self, &XCTestCase.cancellablesAK, newValue, .OBJC_ASSOCIATION_RETAIN) }
-    }
-}
-
-@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-struct TestExpectationPublisher<P: Publisher> {
-    let test: XCTestCase
-    let publisher: P
-
-    @discardableResult
-    func toPublishSingleValue() -> TestRecordedPublisher<P> {
-        let record = TestRecordedPublisher<P>()
-        let expectation = test.expectation(description: "ValueEmitted")
-        publisher.sink(receiveCompletion: { _ in
-            // Do nothing
-        }, receiveValue: {
-            guard record.values.isEmpty else {
-                return XCTFail("Already emitted value")
-            }
-            record.values.append($0)
-            expectation.fulfill()
-        }).store(in: &test.cancellables)
-        return record
-    }
-}
-
-@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-final class TestRecordedPublisher<P: Publisher> {
-    fileprivate(set) var values = [P.Output]()
-    fileprivate(set) var completion: Subscribers.Completion<P.Failure>?
-
-    var last: P.Output? {
-        values.last
     }
 }
 
@@ -121,8 +62,8 @@ struct TestExpectationOperationQueue {
 
     @discardableResult
     func toEnqueueOperationsWithCount(_ count: Int) -> OperationQueueObserver {
-        let expectation = test.expectation(description: "Expect queue to enqueue \(count) operations")
         let observer = OperationQueueObserver(queue: queue)
+        let expectation = test.expectation(description: "Expect queue to enqueue \(count) operations")
         observer.didAddOperation = { _ in
             if observer.operations.count == count {
                 observer.didAddOperation = nil
@@ -140,8 +81,8 @@ struct TestExpectationOperationQueue {
     func toFinishWithEnqueuedOperationCount(_ count: Int) -> OperationQueueObserver {
         precondition(queue.isSuspended, "Queue must be suspended in order to reliably track when all expected operations are enqueued.")
 
-        let expectation = test.expectation(description: "Expect queue to finish with \(count) operations")
         let observer = OperationQueueObserver(queue: queue)
+        let expectation = test.expectation(description: "Expect queue to finish with \(count) operations")
 
         observer.didAddOperation = { _ in
             // We don't expect any more operations added after that
@@ -191,8 +132,8 @@ struct TestExpectationOperation {
 
     func toUpdatePriority(from: Operation.QueuePriority = .normal, to: Operation.QueuePriority = .high) {
         XCTAssertEqual(operation.queuePriority, from)
-        test.keyValueObservingExpectation(for: operation, keyPath: "queuePriority") { [weak operation] (_, _)  in
-            XCTAssertEqual(operation?.queuePriority, to)
+        test.keyValueObservingExpectation(for: operation, keyPath: "queuePriority") { (_, _) in
+            XCTAssertEqual(self.operation.queuePriority, to)
             return true
         }
     }
@@ -208,8 +149,8 @@ extension XCTestCase {
 
 extension XCTestCase {
     class ValuesExpectation<Value> {
-        private let expectation: XCTestExpectation
-        private let expected: [Value]
+        fileprivate let expectation: XCTestExpectation
+        fileprivate let expected: [Value]
         private let isEqual: (Value, Value) -> Bool
         private var _expected: [Value]
         private var _recorded = [Value]()
@@ -316,4 +257,11 @@ extension Array {
         let index = Int(arc4random_uniform(UInt32(self.count)))
         return self[index]
     }
+}
+
+func XCTUnwrap<T>(_ value: T?) throws -> T {
+    guard let value = value else {
+        throw NSError(domain: "XCTest", code: -32, userInfo: [NSLocalizedDescriptionKey: "Failed to unwrap value"])
+    }
+    return value
 }

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 import Nuke
@@ -31,21 +31,6 @@ final class MockProgressiveDataLoader: DataLoading {
         self.completion = completion
         self.resume()
         return _MockTask()
-    }
-
-    func resumeServingChunks(_ count: Int) {
-        for _ in 0..<count {
-            serveNextChunk()
-        }
-    }
-
-    func serveNextChunk() {
-        guard let chunk = chunks.first else { return }
-        chunks.removeFirst()
-        didReceiveData(chunk, urlResponse)
-        if chunks.isEmpty {
-            completion(nil)
-        }
     }
 
     // Serves the next chunk.

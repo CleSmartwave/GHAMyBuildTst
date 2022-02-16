@@ -32,9 +32,6 @@
 
 #ifdef SWIGPYTHON
 %module(package="com.google.webp") libwebp
-%begin %{
-#define SWIG_PYTHON_STRICT_BYTE_CHAR
-%}
 #else
 %module libwebp
 #endif  /* SWIGPYTHON */

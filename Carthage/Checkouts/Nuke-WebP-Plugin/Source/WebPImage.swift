@@ -8,9 +8,6 @@
 
 import Foundation
 import Nuke
-#if SWIFT_PACKAGE
-import NukeWebPPluginC
-#endif
 
 public class WebPImageDecoder: Nuke.ImageDecoding {
 
@@ -19,16 +16,11 @@ public class WebPImageDecoder: Nuke.ImageDecoding {
     public init() {
     }
 
-    public func decode(_ data: Data) -> ImageContainer? {
+    public func decode(data: Data, isFinal: Bool) -> Image? {
         guard data.isWebPFormat else { return nil }
-        guard let image = _decode(data) else { return nil }
-        return ImageContainer(image: image)
-    }
+        guard !isFinal else { return _decode(data) }
 
-    public func decodePartiallyDownloadedData(_ data: Data) -> ImageContainer? {
-        guard data.isWebPFormat else { return nil }
-        guard let image = decoder.incrementallyDecode(data) else { return nil }
-        return ImageContainer(image: image)
+        return decoder.incrementallyDecode(data, isFinal: isFinal)
     }
 
 }
@@ -50,10 +42,9 @@ extension WebPImageDecoder {
 
 // MARK: - private
 private let _queue = DispatchQueue(label: "com.github.ryokosuge.Nuke-WebP-Plugin.DataDecoder")
-
 extension WebPImageDecoder {
 
-    private func _decode(_ data: Data) -> PlatformImage? {
+    internal func _decode(_ data: Data) -> Image? {
         return _queue.sync {
             return decoder.decode(data)
         }

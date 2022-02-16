@@ -3,14 +3,14 @@
   "iOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "ad8e47fc072c5794f2f8c5c00a5d54fc312eda8ff7c9c70cb5bbbb39d71e31b9",
+      "hash" : "f2f7ac9ab7c1be30d7ff0ac125be5379fefcbbd3cec46d4617f29e34c4060e19",
       "name" : "Alamofire",
       "container" : "Alamofire.xcframework",
       "identifier" : "ios-arm64_i386_x86_64-simulator"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "ca27310c10061c9a7aa4c0e1d11ff7c0f0dddd9a3b320fd6f6db054e91841530",
+      "hash" : "d9a62a89a6c0bfac69924199ea60849a7bd8626dcea234ea0f66dff030c6ab00",
       "name" : "Alamofire",
       "container" : "Alamofire.xcframework",
       "identifier" : "ios-arm64_armv7"

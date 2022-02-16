@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 import Nuke
@@ -24,8 +24,7 @@ extension ImageTaskEvent: Equatable {
         case (.cancelled, .cancelled): return true
         case let (.priorityUpdated(lhs), .priorityUpdated(rhs)): return lhs == rhs
         case let (.intermediateResponseReceived(lhs), .intermediateResponseReceived(rhs)): return lhs == rhs
-        case let (.progressUpdated(lhsTotal, lhsCompleted), .progressUpdated(rhsTotal, rhsCompleted)):
-            return (lhsTotal, lhsCompleted) == (rhsTotal, rhsCompleted)
+        case let (.progressUpdated(lhs), .progressUpdated(rhs)): return lhs == rhs
         case let (.completed(lhs), .completed(rhs)): return lhs == rhs
         default: return false
         }
@@ -34,7 +33,7 @@ extension ImageTaskEvent: Equatable {
 
 extension ImageResponse: Equatable {
     public static func == (lhs: ImageResponse, rhs: ImageResponse) -> Bool {
-        return lhs.image === rhs.image
+        return lhs === rhs
     }
 }
 

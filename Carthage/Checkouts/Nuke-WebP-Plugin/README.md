@@ -1,6 +1,7 @@
 # Nuke-WebP-Plugin
 
-![Test or Build](https://github.com/ryokosuge/Nuke-WebP-Plugin/workflows/Test%20or%20Build/badge.svg)
+[![CI Status](http://img.shields.io/travis/ryokosuge/Nuke-WebP-Plugin.svg?style=flat)](https://travis-ci.org/ryokosuge/Nuke-WebP-Plugin)
+[![codecov](https://codecov.io/gh/ryokosuge/Nuke-WebP-Plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/ryokosuge/Nuke-WebP-Plugin)
 ![Version](https://img.shields.io/cocoapods/v/Nuke-WebP-Plugin.svg?label=version)
 ![Supoprts](https://img.shields.io/badge/supports-CocoaPods%20%7C%20Carthage-green.svg)
 ![Platform](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS-lightgrey.svg)
@@ -36,17 +37,16 @@ pod 'Nuke-WebP-Plugin'
 github 'ryokosuge/Nuke-WebP-Plugin'
 ```
 
-## Minimum Requirements
+## Requirements
 
-| Swift | Xcode | iOS | macOS | tvOS | watchOS |
-|:-----:|:-----:|:---:|:-----:|:----:|:-------:|
-| 5.1, 5.2 | 11.0 | 11.0 | 10.13 | 11.0 | 4.0 |
+- iOS 10+ / macOS 10.12+ / tvOS 10.0+ / watchOS 3.0
+- Xcode10.2
+- Swift5
 
 ## Dependencies
 
-| [Nuke](https://github.com/kean/Nuke) | [libwebp](https://chromium.googlesource.com/webm/libwebp) |
-|:---:|:---:|
-| >= 9.0 | v1.0.0 |
+- [Nuke >= 8.0](https://github.com/kean/Nuke)
+- [libwebp = 1.0.0](https://chromium.googlesource.com/webm/libwebp)
 
 ## Author
 

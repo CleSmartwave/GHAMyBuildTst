@@ -62,7 +62,6 @@
 #include "webp/mux.h"
 #include "../examples/example_util.h"
 #include "../imageio/imageio_util.h"
-#include "./unicode.h"
 
 //------------------------------------------------------------------------------
 // Config object to parse command-line arguments.
@@ -391,25 +390,23 @@ static int CreateMux(const char* const filename, WebPMux** mux) {
   *mux = WebPMuxCreate(&bitstream, 1);
   WebPDataClear(&bitstream);
   if (*mux != NULL) return 1;
-  WFPRINTF(stderr, "Failed to create mux object from file %s.\n",
-           (const W_CHAR*)filename);
+  fprintf(stderr, "Failed to create mux object from file %s.\n", filename);
   return 0;
 }
 
 static int WriteData(const char* filename, const WebPData* const webpdata) {
   int ok = 0;
-  FILE* fout = WSTRCMP(filename, "-") ? WFOPEN(filename, "wb")
-                                      : ImgIoUtilSetBinaryMode(stdout);
+  FILE* fout = strcmp(filename, "-") ? fopen(filename, "wb")
+                                     : ImgIoUtilSetBinaryMode(stdout);
   if (fout == NULL) {
-    WFPRINTF(stderr, "Error opening output WebP file %s!\n",
-             (const W_CHAR*)filename);
+    fprintf(stderr, "Error opening output WebP file %s!\n", filename);
     return 0;
   }
   if (fwrite(webpdata->bytes, webpdata->size, 1, fout) != 1) {
-    WFPRINTF(stderr, "Error writing file %s!\n", (const W_CHAR*)filename);
+    fprintf(stderr, "Error writing file %s!\n", filename);
   } else {
-    WFPRINTF(stderr, "Saved file %s (%d bytes)\n",
-             (const W_CHAR*)filename, (int)webpdata->size);
+    fprintf(stderr, "Saved file %s (%d bytes)\n",
+            filename, (int)webpdata->size);
     ok = 1;
   }
   if (fout != stdout) fclose(fout);
@@ -598,33 +595,26 @@ static int ValidateCommandLine(const CommandLineArguments* const cmd_args,
 
 #define FEATURETYPE_IS_NIL (config->type_ == NIL_FEATURE)
 
-#define CHECK_NUM_ARGS_AT_LEAST(NUM, LABEL)                              \
+#define CHECK_NUM_ARGS_LESS(NUM, LABEL)                                  \
   if (argc < i + (NUM)) {                                                \
     fprintf(stderr, "ERROR: Too few arguments for '%s'.\n", argv[i]);    \
     goto LABEL;                                                          \
   }
 
-#define CHECK_NUM_ARGS_AT_MOST(NUM, LABEL)                               \
-  if (argc > i + (NUM)) {                                                \
+#define CHECK_NUM_ARGS_NOT_EQUAL(NUM, LABEL)                             \
+  if (argc != i + (NUM)) {                                               \
     fprintf(stderr, "ERROR: Too many arguments for '%s'.\n", argv[i]);   \
     goto LABEL;                                                          \
   }
 
-#define CHECK_NUM_ARGS_EXACTLY(NUM, LABEL)                               \
-  CHECK_NUM_ARGS_AT_LEAST(NUM, LABEL);                                   \
-  CHECK_NUM_ARGS_AT_MOST(NUM, LABEL);
-
 // Parses command-line arguments to fill up config object. Also performs some
-// semantic checks. unicode_argv contains wchar_t arguments or is null.
-static int ParseCommandLine(Config* config, const W_CHAR** const unicode_argv) {
+// semantic checks.
+static int ParseCommandLine(Config* config) {
   int i = 0;
   int feature_arg_index = 0;
   int ok = 1;
   int argc = config->cmd_args_.argc_;
   const char* const* argv = config->cmd_args_.argv_;
-  // Unicode file paths will be used if available.
-  const char* const* wargv =
-      (unicode_argv != NULL) ? (const char**)(unicode_argv + 1) : argv;
 
   while (i < argc) {
     FeatureArg* const arg = &config->args_[feature_arg_index];
@@ -637,7 +627,7 @@ static int ParseCommandLine(Config* config, const W_CHAR** const unicode_argv) {
         }
         ++i;
       } else if (!strcmp(argv[i], "-duration")) {
-        CHECK_NUM_ARGS_AT_LEAST(2, ErrParse);
+        CHECK_NUM_ARGS_LESS(2, ErrParse);
         if (ACTION_IS_NIL || config->action_type_ == ACTION_DURATION) {
           config->action_type_ = ACTION_DURATION;
         } else {
@@ -667,7 +657,7 @@ static int ParseCommandLine(Config* config, const W_CHAR** const unicode_argv) {
         }
         ++i;
       } else if (!strcmp(argv[i], "-frame")) {
-        CHECK_NUM_ARGS_AT_LEAST(3, ErrParse);
+        CHECK_NUM_ARGS_LESS(3, ErrParse);
         if (ACTION_IS_NIL || config->action_type_ == ACTION_SET) {
           config->action_type_ = ACTION_SET;
         } else {
@@ -684,7 +674,7 @@ static int ParseCommandLine(Config* config, const W_CHAR** const unicode_argv) {
         ++feature_arg_index;
         i += 3;
       } else if (!strcmp(argv[i], "-loop") || !strcmp(argv[i], "-bgcolor")) {
-        CHECK_NUM_ARGS_AT_LEAST(2, ErrParse);
+        CHECK_NUM_ARGS_LESS(2, ErrParse);
         if (ACTION_IS_NIL || config->action_type_ == ACTION_SET) {
           config->action_type_ = ACTION_SET;
         } else {
@@ -701,36 +691,34 @@ static int ParseCommandLine(Config* config, const W_CHAR** const unicode_argv) {
         ++feature_arg_index;
         i += 2;
       } else if (!strcmp(argv[i], "-o")) {
-        CHECK_NUM_ARGS_AT_LEAST(2, ErrParse);
-        config->output_ = wargv[i + 1];
+        CHECK_NUM_ARGS_LESS(2, ErrParse);
+        config->output_ = argv[i + 1];
         i += 2;
       } else if (!strcmp(argv[i], "-info")) {
-        CHECK_NUM_ARGS_EXACTLY(2, ErrParse);
+        CHECK_NUM_ARGS_NOT_EQUAL(2, ErrParse);
         if (config->action_type_ != NIL_ACTION) {
           ERROR_GOTO1("ERROR: Multiple actions specified.\n", ErrParse);
         } else {
           config->action_type_ = ACTION_INFO;
           config->arg_count_ = 0;
-          config->input_ = wargv[i + 1];
+          config->input_ = argv[i + 1];
         }
         i += 2;
       } else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "-help")) {
         PrintHelp();
         DeleteConfig(config);
-        LOCAL_FREE((W_CHAR** const)unicode_argv);
         exit(0);
       } else if (!strcmp(argv[i], "-version")) {
         const int version = WebPGetMuxVersion();
         printf("%d.%d.%d\n",
                (version >> 16) & 0xff, (version >> 8) & 0xff, version & 0xff);
         DeleteConfig(config);
-        LOCAL_FREE((W_CHAR** const)unicode_argv);
         exit(0);
       } else if (!strcmp(argv[i], "--")) {
         if (i < argc - 1) {
           ++i;
           if (config->input_ == NULL) {
-            config->input_ = wargv[i];
+            config->input_ = argv[i];
           } else {
             ERROR_GOTO2("ERROR at '%s': Multiple input files specified.\n",
                         argv[i], ErrParse);
@@ -754,8 +742,8 @@ static int ParseCommandLine(Config* config, const W_CHAR** const unicode_argv) {
           ERROR_GOTO1("ERROR: Multiple features specified.\n", ErrParse);
         }
         if (config->action_type_ == ACTION_SET) {
-          CHECK_NUM_ARGS_AT_LEAST(2, ErrParse);
-          arg->filename_ = wargv[i + 1];
+          CHECK_NUM_ARGS_LESS(2, ErrParse);
+          arg->filename_ = argv[i + 1];
           ++feature_arg_index;
           i += 2;
         } else {
@@ -763,14 +751,14 @@ static int ParseCommandLine(Config* config, const W_CHAR** const unicode_argv) {
         }
       } else if (!strcmp(argv[i], "frame") &&
                  (config->action_type_ == ACTION_GET)) {
-        CHECK_NUM_ARGS_AT_LEAST(2, ErrParse);
+        CHECK_NUM_ARGS_LESS(2, ErrParse);
         config->type_ = FEATURE_ANMF;
         arg->params_ = argv[i + 1];
         ++feature_arg_index;
         i += 2;
       } else {  // Assume input file.
         if (config->input_ == NULL) {
-          config->input_ = wargv[i];
+          config->input_ = argv[i];
         } else {
           ERROR_GOTO2("ERROR at '%s': Multiple input files specified.\n",
                       argv[i], ErrParse);
@@ -816,8 +804,8 @@ static int ValidateConfig(Config* const config) {
 }
 
 // Create config object from command-line arguments.
-static int InitializeConfig(int argc, const char* argv[], Config* const config,
-                            const W_CHAR** const unicode_argv) {
+static int InitializeConfig(int argc, const char* argv[],
+                            Config* const config) {
   int num_feature_args = 0;
   int ok;
 
@@ -838,7 +826,7 @@ static int InitializeConfig(int argc, const char* argv[], Config* const config,
   }
 
   // Parse command-line.
-  if (!ParseCommandLine(config, unicode_argv) || !ValidateConfig(config)) {
+  if (!ParseCommandLine(config) || !ValidateConfig(config)) {
     ERROR_GOTO1("Exiting due to command-line parsing error.\n", Err1);
   }
 
@@ -848,9 +836,8 @@ static int InitializeConfig(int argc, const char* argv[], Config* const config,
 
 #undef ACTION_IS_NIL
 #undef FEATURETYPE_IS_NIL
-#undef CHECK_NUM_ARGS_AT_LEAST
-#undef CHECK_NUM_ARGS_AT_MOST
-#undef CHECK_NUM_ARGS_EXACTLY
+#undef CHECK_NUM_ARGS_LESS
+#undef CHECK_NUM_ARGS_MORE
 
 //------------------------------------------------------------------------------
 // Processing.
@@ -1045,7 +1032,7 @@ static int Process(const Config* config) {
         int* durations = NULL;
         WebPMux* new_mux = DuplicateMuxHeader(mux);
         if (new_mux == NULL) goto Err2;
-        durations = (int*)WebPMalloc((size_t)num_frames * sizeof(*durations));
+        durations = (int*)malloc((size_t)num_frames * sizeof(*durations));
         if (durations == NULL) goto Err2;
         for (i = 0; i < num_frames; ++i) durations[i] = -1;
 
@@ -1103,7 +1090,7 @@ static int Process(const Config* config) {
         new_mux = NULL;
 
  Err3:
-        WebPFree(durations);
+        free(durations);
         WebPMuxDelete(new_mux);
         if (!ok) goto Err2;
       }
@@ -1148,18 +1135,14 @@ static int Process(const Config* config) {
 
 int main(int argc, const char* argv[]) {
   Config config;
-  int ok;
-
-  INIT_WARGV(argc, argv);
-
-  ok = InitializeConfig(argc - 1, argv + 1, &config, GET_WARGV_OR_NULL());
+  int ok = InitializeConfig(argc - 1, argv + 1, &config);
   if (ok) {
     ok = Process(&config);
   } else {
     PrintHelp();
   }
   DeleteConfig(&config);
-  FREE_WARGV_AND_RETURN(!ok);
+  return !ok;
 }
 
 //------------------------------------------------------------------------------

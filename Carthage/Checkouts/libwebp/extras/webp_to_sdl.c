@@ -40,7 +40,7 @@ int WebpToSDL(const char* data, unsigned int data_size) {
 
   if (!WebPInitDecoderConfig(&config)) {
     fprintf(stderr, "Library version mismatch!\n");
-    return 0;
+    return 1;
   }
 
   if (!init_ok) {

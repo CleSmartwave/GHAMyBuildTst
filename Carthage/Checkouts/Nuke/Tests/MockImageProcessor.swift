@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 import Nuke
@@ -22,14 +22,13 @@ private struct AssociatedKeys {
 
 // MARK: - MockImageProcessor
 
-class MockImageProcessor: ImageProcessing, CustomStringConvertible {
+class MockImageProcessor: ImageProcessing {
     var identifier: String
 
     init(id: String) {
         self.identifier = id
     }
-
-    func process(_ image: PlatformImage) -> PlatformImage? {
+    func process(image: PlatformImage, context: ImageProcessingContext?) -> PlatformImage? {
         var processorIDs: [String] = image.nk_test_processorIDs
         #if os(macOS)
         let processedImage = image.copy() as! PlatformImage
@@ -43,16 +42,12 @@ class MockImageProcessor: ImageProcessing, CustomStringConvertible {
         processedImage.nk_test_processorIDs = processorIDs
         return processedImage
     }
-
-    var description: String {
-        "MockImageProcessor(id: \(identifier))"
-    }
 }
 
 // MARK: - MockFailingProcessor
 
 class MockFailingProcessor: ImageProcessing {
-    func process(_ image: PlatformImage) -> PlatformImage? {
+    func process(image: PlatformImage, context: ImageProcessingContext?) -> PlatformImage? {
         return nil
     }
 
@@ -66,7 +61,7 @@ class MockFailingProcessor: ImageProcessing {
 class MockEmptyImageProcessor: ImageProcessing {
     let identifier = "MockEmptyImageProcessor"
 
-    func process(_ image: PlatformImage) -> PlatformImage? {
+    func process(image: PlatformImage, context: ImageProcessingContext?) -> PlatformImage? {
         return image
     }
 
@@ -85,11 +80,11 @@ final class MockProcessorFactory {
     private final class Processor: MockImageProcessor {
         var factory: MockProcessorFactory!
 
-        override func process(_ image: PlatformImage) -> PlatformImage? {
+        override func process(image: PlatformImage, context: ImageProcessingContext?) -> PlatformImage? {
             factory.lock.lock()
             factory.numberOfProcessorsApplied += 1
             factory.lock.unlock()
-            return super.process(image)
+            return super.process(image: image, context: context)
         }
     }
 

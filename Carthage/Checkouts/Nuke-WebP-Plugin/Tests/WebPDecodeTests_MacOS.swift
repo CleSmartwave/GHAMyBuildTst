@@ -56,15 +56,15 @@ class WebPDecodeTests: XCTestCase {
         let webpData = try! Data(contentsOf: self.webpImagePath)
         let decoder = NukeWebPPlugin.WebPDataDecoder();
         // no image
-        XCTAssertNil(decoder.incrementallyDecode(webpData[0...500]))
+        XCTAssertNil(decoder.incrementallyDecode(webpData[0...500], isFinal: false))
 
         // created image
-        let scan1 = decoder.incrementallyDecode(webpData[0...3702])
+        let scan1 = decoder.incrementallyDecode(webpData[0...3702], isFinal: false)
         XCTAssertNotNil(scan1)
         XCTAssertEqual(scan1!.size.width, 320)
         XCTAssertEqual(scan1!.size.height, 235)
 
-        let scan2 = decoder.incrementallyDecode(webpData)
+        let scan2 = decoder.incrementallyDecode(webpData, isFinal: true)
         XCTAssertNotNil(scan2)
         XCTAssertEqual(scan2!.size.width, 320)
         XCTAssertEqual(scan2!.size.height, 235)

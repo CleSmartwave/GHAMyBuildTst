@@ -25,7 +25,6 @@
 #include "webp_to_sdl.h"
 #include "webp/decode.h"
 #include "imageio/imageio_util.h"
-#include "../examples/unicode.h"
 
 #if defined(WEBP_HAVE_JUST_SDL_H)
 #include <SDL.h>
@@ -52,33 +51,29 @@ static void ProcessEvents(void) {
 int main(int argc, char* argv[]) {
   int c;
   int ok = 0;
-
-  INIT_WARGV(argc, argv);
-
   for (c = 1; c < argc; ++c) {
     const char* file = NULL;
     const uint8_t* webp = NULL;
     size_t webp_size = 0;
     if (!strcmp(argv[c], "-h")) {
       printf("Usage: %s [-h] image.webp [more_files.webp...]\n", argv[0]);
-      FREE_WARGV_AND_RETURN(0);
+      return 0;
     } else {
-      file = (const char*)GET_WARGV(argv, c);
+      file = argv[c];
     }
     if (file == NULL) continue;
     if (!ImgIoUtilReadFile(file, &webp, &webp_size)) {
-      WFPRINTF(stderr, "Error opening file: %s\n", (const W_CHAR*)file);
+      fprintf(stderr, "Error opening file: %s\n", file);
       goto Error;
     }
     if (webp_size != (size_t)(int)webp_size) {
-      free((void*)webp);
       fprintf(stderr, "File too large.\n");
       goto Error;
     }
     ok = WebpToSDL((const char*)webp, (int)webp_size);
     free((void*)webp);
     if (!ok) {
-      WFPRINTF(stderr, "Error decoding file %s\n", (const W_CHAR*)file);
+      fprintf(stderr, "Error decoding file %s\n", file);
       goto Error;
     }
     ProcessEvents();
@@ -87,12 +82,12 @@ int main(int argc, char* argv[]) {
 
  Error:
   SDL_Quit();
-  FREE_WARGV_AND_RETURN(ok ? 0 : 1);
+  return ok ? 0 : 1;
 }
 
 #else  // !WEBP_HAVE_SDL
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
   fprintf(stderr, "SDL support not enabled in %s.\n", argv[0]);
   (void)argc;
   return 0;

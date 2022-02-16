@@ -29,7 +29,7 @@ void free_image_data(void *info, const void *data, size_t size) {
     }
 }
 
-- (Image *)incrementallyDecodeData:(NSData *)data {
+- (Image *)incrementallyDecodeData:(NSData *)data isFinal:(BOOL)isFinal {
 
     if (!_idec) {
         _idec = WebPINewRGB(MODE_rgbA, NULL, 0, 0);

@@ -23,9 +23,6 @@
 #include "webp/decode.h"
 #include "webp/demux.h"
 #include "../imageio/imageio_util.h"
-#include "./gifdec.h"
-#include "./unicode.h"
-#include "./unicode_gif.h"
 
 #if defined(_MSC_VER) && _MSC_VER < 1900
 #define snprintf _snprintf
@@ -60,15 +57,15 @@ static int AllocateFrames(AnimatedImage* const image, uint32_t num_frames) {
       !CheckSizeForOverflow(total_frame_size)) {
     return 0;
   }
-  mem = (uint8_t*)WebPMalloc((size_t)total_size);
-  frames = (DecodedFrame*)WebPMalloc((size_t)total_frame_size);
+  mem = (uint8_t*)malloc((size_t)total_size);
+  frames = (DecodedFrame*)malloc((size_t)total_frame_size);
 
   if (mem == NULL || frames == NULL) {
-    WebPFree(mem);
-    WebPFree(frames);
+    free(mem);
+    free(frames);
     return 0;
   }
-  WebPFree(image->raw_mem);
+  free(image->raw_mem);
   image->num_frames = num_frames;
   image->frames = frames;
   for (i = 0; i < num_frames; ++i) {
@@ -82,8 +79,8 @@ static int AllocateFrames(AnimatedImage* const image, uint32_t num_frames) {
 
 void ClearAnimatedImage(AnimatedImage* const image) {
   if (image != NULL) {
-    WebPFree(image->raw_mem);
-    WebPFree(image->frames);
+    free(image->raw_mem);
+    free(image->frames);
     image->num_frames = 0;
     image->frames = NULL;
     image->raw_mem = NULL;
@@ -154,42 +151,42 @@ static int DumpFrame(const char filename[], const char dump_folder[],
   int ok = 0;
   size_t max_len;
   int y;
-  const W_CHAR* base_name = NULL;
-  W_CHAR* file_name = NULL;
+  const char* base_name = NULL;
+  char* file_name = NULL;
   FILE* f = NULL;
   const char* row;
 
-  if (dump_folder == NULL) dump_folder = (const char*)TO_W_CHAR(".");
+  if (dump_folder == NULL) dump_folder = ".";
 
-  base_name = WSTRRCHR(filename, '/');
-  base_name = (base_name == NULL) ? (const W_CHAR*)filename : base_name + 1;
-  max_len = WSTRLEN(dump_folder) + 1 + WSTRLEN(base_name)
+  base_name = strrchr(filename, '/');
+  base_name = (base_name == NULL) ? filename : base_name + 1;
+  max_len = strlen(dump_folder) + 1 + strlen(base_name)
           + strlen("_frame_") + strlen(".pam") + 8;
-  file_name = (W_CHAR*)WebPMalloc(max_len * sizeof(*file_name));
+  file_name = (char*)malloc(max_len * sizeof(*file_name));
   if (file_name == NULL) goto End;
 
-  if (WSNPRINTF(file_name, max_len, "%s/%s_frame_%d.pam",
-                (const W_CHAR*)dump_folder, base_name, frame_num) < 0) {
+  if (snprintf(file_name, max_len, "%s/%s_frame_%d.pam",
+               dump_folder, base_name, frame_num) < 0) {
     fprintf(stderr, "Error while generating file name\n");
     goto End;
   }
 
-  f = WFOPEN(file_name, "wb");
+  f = fopen(file_name, "wb");
   if (f == NULL) {
-    WFPRINTF(stderr, "Error opening file for writing: %s\n", file_name);
+    fprintf(stderr, "Error opening file for writing: %s\n", file_name);
     ok = 0;
     goto End;
   }
   if (fprintf(f, "P7\nWIDTH %d\nHEIGHT %d\n"
               "DEPTH 4\nMAXVAL 255\nTUPLTYPE RGB_ALPHA\nENDHDR\n",
               canvas_width, canvas_height) < 0) {
-    WFPRINTF(stderr, "Write error for file %s\n", file_name);
+    fprintf(stderr, "Write error for file %s\n", file_name);
     goto End;
   }
   row = (const char*)rgba;
   for (y = 0; y < canvas_height; ++y) {
     if (fwrite(row, canvas_width * kNumChannels, 1, f) != 1) {
-      WFPRINTF(stderr, "Error writing to file: %s\n", file_name);
+      fprintf(stderr, "Error writing to file: %s\n", file_name);
       goto End;
     }
     row += canvas_width * kNumChannels;
@@ -197,7 +194,7 @@ static int DumpFrame(const char filename[], const char dump_folder[],
   ok = 1;
  End:
   if (f != NULL) fclose(f);
-  WebPFree(file_name);
+  free(file_name);
   return ok;
 }
 
@@ -225,7 +222,7 @@ static int ReadAnimatedWebP(const char filename[],
 
   dec = WebPAnimDecoderNew(webp_data, NULL);
   if (dec == NULL) {
-    WFPRINTF(stderr, "Error parsing image: %s\n", (const W_CHAR*)filename);
+    fprintf(stderr, "Error parsing image: %s\n", filename);
     goto End;
   }
 
@@ -278,7 +275,6 @@ static int ReadAnimatedWebP(const char filename[],
     prev_frame_timestamp = timestamp;
   }
   ok = dump_ok;
-  if (ok) image->format = ANIM_WEBP;
 
  End:
   WebPAnimDecoderDelete(dec);
@@ -372,6 +368,26 @@ static int DGifSavedExtensionToGCB(GifFileType* GifFile, int ImageIndex,
 #if !LOCAL_GIF_PREREQ(5, 1)
 #define DGifCloseFile(a, b) DGifCloseFile(a)
 #endif
+
+static void GIFDisplayError(const GifFileType* const gif, int gif_error) {
+  // libgif 4.2.0 has retired PrintGifError() and added GifErrorString().
+#if LOCAL_GIF_PREREQ(4, 2)
+#if LOCAL_GIF_PREREQ(5, 0)
+  const char* error_str =
+      GifErrorString((gif == NULL) ? gif_error : gif->Error);
+#else
+  const char* error_str = GifErrorString();
+  (void)gif;
+#endif
+  if (error_str == NULL) error_str = "Unknown error";
+  fprintf(stderr, "GIFLib Error %d: %s\n", gif_error, error_str);
+#else
+  (void)gif;
+  fprintf(stderr, "GIFLib Error %d: ", gif_error);
+  PrintGifError();
+  fprintf(stderr, "\n");
+#endif
+}
 
 static int IsKeyFrameGIF(const GifImageDesc* prev_desc, int prev_dispose,
                          const DecodedFrame* const prev_frame,
@@ -513,15 +529,15 @@ static int ReadAnimatedGIF(const char filename[], AnimatedImage* const image,
   int gif_error;
   GifFileType* gif;
 
-  gif = DGifOpenFileUnicode((const W_CHAR*)filename, NULL);
+  gif = DGifOpenFileName(filename, NULL);
   if (gif == NULL) {
-    WFPRINTF(stderr, "Could not read file: %s.\n", (const W_CHAR*)filename);
+    fprintf(stderr, "Could not read file: %s.\n", filename);
     return 0;
   }
 
   gif_error = DGifSlurp(gif);
   if (gif_error != GIF_OK) {
-    WFPRINTF(stderr, "Could not parse image: %s.\n", (const W_CHAR*)filename);
+    fprintf(stderr, "Could not parse image: %s.\n", filename);
     GIFDisplayError(gif, gif_error);
     DGifCloseFile(gif, NULL);
     return 0;
@@ -671,7 +687,6 @@ static int ReadAnimatedGIF(const char filename[], AnimatedImage* const image,
       }
     }
   }
-  image->format = ANIM_GIF;
   DGifCloseFile(gif, NULL);
   return 1;
 }
@@ -707,7 +722,7 @@ int ReadAnimatedImage(const char filename[], AnimatedImage* const image,
   memset(image, 0, sizeof(*image));
 
   if (!ImgIoUtilReadFile(filename, &webp_data.bytes, &webp_data.size)) {
-    WFPRINTF(stderr, "Error reading file: %s\n", (const W_CHAR*)filename);
+    fprintf(stderr, "Error reading file: %s\n", filename);
     return 0;
   }
 
@@ -717,9 +732,9 @@ int ReadAnimatedImage(const char filename[], AnimatedImage* const image,
   } else if (IsGIF(&webp_data)) {
     ok = ReadAnimatedGIF(filename, image, dump_frames, dump_folder);
   } else {
-    WFPRINTF(stderr,
-             "Unknown file type: %s. Supported file types are WebP and GIF\n",
-             (const W_CHAR*)filename);
+    fprintf(stderr,
+            "Unknown file type: %s. Supported file types are WebP and GIF\n",
+            filename);
     ok = 0;
   }
   if (!ok) ClearAnimatedImage(image);

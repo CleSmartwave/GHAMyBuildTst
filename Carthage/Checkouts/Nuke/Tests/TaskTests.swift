@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2015-2020 Alexander Grebenyuk (github.com/kean).
 
 import XCTest
 @testable import Nuke
@@ -11,7 +11,7 @@ class TaskTests: XCTestCase {
     func testStarterCalledOnFirstSubscription() {
         // Given
         var startCount = 0
-        _ = SimpleTask<Int, Error>(starter: { _ in
+        _ = Task<Int, Error>(starter: { _ in
             startCount += 1
         })
 
@@ -22,7 +22,7 @@ class TaskTests: XCTestCase {
     func testStarterCalledWhenSubscriptionIsAdded() {
         // Given
         var startCount = 0
-        let task = SimpleTask<Int, Error>(starter: { _ in
+        let task = Task<Int, Error>(starter: { _ in
             startCount += 1
         })
 
@@ -36,7 +36,7 @@ class TaskTests: XCTestCase {
     func testStarterOnlyCalledOnce() {
         // Given
         var startCount = 0
-        let task = SimpleTask<Int, Error>(starter: { _ in
+        let task = Task<Int, Error>(starter: { _ in
             startCount += 1
         })
 
@@ -55,10 +55,10 @@ class TaskTests: XCTestCase {
 
         weak var weakFoo: Foo?
 
-        let task: AsyncTask<Int, Error> = autoreleasepool { // Just in case
+        let task: Task<Int, Error> = autoreleasepool { // Just in case
             let foo = Foo()
             weakFoo = foo
-            return SimpleTask<Int, Error>(starter: { _ in
+            return Task<Int, Error>(starter: { _ in
                 _ = foo // Retain foo
             })
         }
@@ -76,7 +76,7 @@ class TaskTests: XCTestCase {
 
     func testWhenSubscriptionAddedEventsAreForwarded() {
         // Given
-        let task = SimpleTask<Int, MyError>(starter: {
+        let task = Task<Int, MyError>(starter: {
             $0.send(progress: TaskProgress(completed: 1, total: 2))
             $0.send(value: 1)
             $0.send(progress: TaskProgress(completed: 2, total: 2))
@@ -84,7 +84,7 @@ class TaskTests: XCTestCase {
         })
 
         // When
-        var recordedEvents = [AsyncTask<Int, MyError>.Event]()
+        var recordedEvents = [Task<Int, MyError>.Event]()
         _ = task.subscribe { event in
             recordedEvents.append(event)
         }
@@ -100,7 +100,7 @@ class TaskTests: XCTestCase {
 
     func testBothSubscriptionsReceiveEvents() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
 
         // When there are two subscriptions
         var eventCount = 0
@@ -121,7 +121,7 @@ class TaskTests: XCTestCase {
 
     func testCantSubscribeToAlreadyCancelledTask() {
         // Given
-        let task = SimpleTask<Int, MyError>(starter: { _ in })
+        let task = Task<Int, MyError>(starter: { _ in })
         let subscription = task.subscribe { _ in }
 
         // When
@@ -133,7 +133,7 @@ class TaskTests: XCTestCase {
 
     func testCantSubscribeToAlreadySucceededTask() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         let _ = task.subscribe { _ in }
 
         // When
@@ -145,7 +145,7 @@ class TaskTests: XCTestCase {
 
     func testCantSubscribeToAlreadyFailedTasks() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         let _ = task.subscribe { _ in }
 
         // When
@@ -155,29 +155,12 @@ class TaskTests: XCTestCase {
         XCTAssertNil(task.subscribe { _ in })
     }
 
-    func testSubscribeToTaskWithSynchronousCompletionReturnsNil() {
-        // Given
-        let task = SimpleTask<Int, MyError> { (task) in
-            task.send(value: 0, isCompleted: true)
-        }
-
-        // When
-        let expectation = self.expectation(description: "Observer called")
-        let subscription = task.subscribe { _ in
-            expectation.fulfill()
-        }
-
-        // Then
-        XCTAssertNil(subscription)
-        wait()
-    }
-
     // MARK: - Ubsubscribe
 
     func testWhenSubscriptionIsRemovedNoEventsAreSent() {
         // Given
-        let task = AsyncTask<Int, MyError>()
-        var recordedEvents = [AsyncTask<Int, MyError>.Event]()
+        let task = Task<Int, MyError>()
+        var recordedEvents = [Task<Int, MyError>.Event]()
         let subscription = task.subscribe { recordedEvents.append($0) }
 
         // When
@@ -190,7 +173,7 @@ class TaskTests: XCTestCase {
 
     func testWhenSubscriptionIsRemovedTaskBecomesDisposed() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         let subscription = task.subscribe { _ in }
 
         // When
@@ -202,7 +185,7 @@ class TaskTests: XCTestCase {
 
     func testWhenSubscriptionIsRemovedOnCancelIsCalled() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         let subscription = task.subscribe { _ in }
 
         var onCancelledIsCalled = false
@@ -220,7 +203,7 @@ class TaskTests: XCTestCase {
     func testWhenSubscriptionIsRemovedOperationIsCancelled() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription = task.subscribe { _ in }
         XCTAssertFalse(operation.isCancelled)
 
@@ -234,8 +217,8 @@ class TaskTests: XCTestCase {
     func testWhenSubscriptionIsRemovedDependencyIsCancelled() {
         // Given
         let operation = Foundation.Operation()
-        let dependency = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
-        let task = SimpleTask<Int, MyError>(starter: { $0.dependency = dependency.subscribe { _ in} })
+        let dependency = Task<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.dependency = dependency.subscribe { _ in} })
         let subscription = task.subscribe { _ in }
         XCTAssertFalse(operation.isCancelled)
 
@@ -249,7 +232,7 @@ class TaskTests: XCTestCase {
     func testWhenOneOfTwoSubscriptionsAreRemovedTaskNotCancelled() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription1 = task.subscribe { _ in }
         let _ = task.subscribe { _ in }
 
@@ -263,7 +246,7 @@ class TaskTests: XCTestCase {
     func testWhenTwoOfTwoSubscriptionsAreRemovedTaskIsCancelled() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription1 = task.subscribe { _ in }
         let subscription2 = task.subscribe { _ in }
 
@@ -280,7 +263,7 @@ class TaskTests: XCTestCase {
     func testWhenPriorityIsUpdatedOperationPriorityAlsoUpdated() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription = task.subscribe { _ in }
 
         // When
@@ -292,7 +275,7 @@ class TaskTests: XCTestCase {
 
     func testWhenTaskChangesOperationPriorityUpdated() { // Or sets operation later
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         let subscription = task.subscribe { _ in }
 
         // When
@@ -307,7 +290,7 @@ class TaskTests: XCTestCase {
     func testThatPriorityCanBeLowered() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription = task.subscribe { _ in }
 
         // When
@@ -320,7 +303,7 @@ class TaskTests: XCTestCase {
     func testThatPriorityEqualMaximumPriorityOfAllSubscriptions() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription1 = task.subscribe { _ in }
         let subscription2 = task.subscribe { _ in }
 
@@ -335,7 +318,7 @@ class TaskTests: XCTestCase {
     func testWhenSubscriptionIsRemovedPriorityIsUpdated() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription1 = task.subscribe { _ in }
         let subscription2 = task.subscribe { _ in }
 
@@ -352,7 +335,7 @@ class TaskTests: XCTestCase {
     func testWhenSubscriptionLowersPriorityButExistingSubscriptionHasHigherPriporty() {
         // Given
         let operation = Foundation.Operation()
-        let task = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.operation = operation })
         let subscription1 = task.subscribe { _ in }
         let subscription2 = task.subscribe { _ in }
 
@@ -367,8 +350,8 @@ class TaskTests: XCTestCase {
     func testPriorityOfDependencyUpdated() {
         // Given
         let operation = Foundation.Operation()
-        let dependency = SimpleTask<Int, MyError>(starter: { $0.operation = operation })
-        let task = SimpleTask<Int, MyError>(starter: { $0.dependency = dependency.subscribe { _ in} })
+        let dependency = Task<Int, MyError>(starter: { $0.operation = operation })
+        let task = Task<Int, MyError>(starter: { $0.dependency = dependency.subscribe { _ in} })
         let subscription = task.subscribe { _ in }
 
         // When
@@ -382,7 +365,7 @@ class TaskTests: XCTestCase {
 
     func testExecutingTaskIsntDisposed() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         var isDisposeCalled = false
         task.onDisposed = { isDisposeCalled = true }
         let _ = task.subscribe { _ in }
@@ -397,7 +380,7 @@ class TaskTests: XCTestCase {
 
     func testThatTaskIsDisposedWhenCancelled() {
         // Given
-        let task = SimpleTask<Int, MyError>(starter: { _ in })
+        let task = Task<Int, MyError>(starter: { _ in })
         var isDisposeCalled = false
         task.onDisposed = { isDisposeCalled = true }
         let subscription = task.subscribe { _ in }
@@ -412,7 +395,7 @@ class TaskTests: XCTestCase {
 
     func testThatTaskIsDisposedWhenCompletedWithSuccess() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         var isDisposeCalled = false
         task.onDisposed = { isDisposeCalled = true }
         let _ = task.subscribe { _ in }
@@ -427,7 +410,7 @@ class TaskTests: XCTestCase {
 
     func testThatTaskIsDisposedWhenCompletedWithFailure() {
         // Given
-        let task = AsyncTask<Int, MyError>()
+        let task = Task<Int, MyError>()
         var isDisposeCalled = false
         task.onDisposed = { isDisposeCalled = true }
         let _ = task.subscribe { _ in }
@@ -447,25 +430,8 @@ private struct MyError: Equatable {
     let raw: String
 }
 
-private final class SimpleTask<T, E>: AsyncTask<T, E> {
-    private var starter: ((SimpleTask) -> Void)?
-
-    /// Initializes the task with the `starter`.
-    /// - parameter starter: The closure which gets called as soon as the first
-    /// subscription is added to the task. Only gets called once and is immediatelly
-    /// deallocated after it is called.
-    init(starter: ((SimpleTask) -> Void)? = nil) {
-        self.starter = starter
-    }
-
-    override func start() {
-        starter?(self)
-        starter = nil
-    }
-}
-
-extension AsyncTask {
+extension Task {
     func subscribe(priority: TaskPriority = .normal, _ observer: @escaping (Event) -> Void) -> TaskSubscription? {
-        publisher.subscribe(priority: priority, observer)
+        return publisher.subscribe(priority: priority, observer)
     }
 }

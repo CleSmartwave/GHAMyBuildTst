@@ -33,8 +33,6 @@
 #include "../examples/example_util.h"
 #include "../imageio/imageio_util.h"
 #include "./gifdec.h"
-#include "./unicode.h"
-#include "./unicode_gif.h"
 
 #if !defined(STDIN_FILENO)
 #define STDIN_FILENO 0
@@ -96,12 +94,13 @@ static void Help(void) {
 
 //------------------------------------------------------------------------------
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
   int verbose = 0;
   int gif_error = GIF_ERROR;
   WebPMuxError err = WEBP_MUX_OK;
   int ok = 0;
-  const W_CHAR* in_file = NULL, *out_file = NULL;
+  const char *in_file = NULL, *out_file = NULL;
+  FILE* out = NULL;
   GifFileType* gif = NULL;
   int frame_duration = 0;
   int frame_timestamp = 0;
@@ -134,13 +133,11 @@ int main(int argc, const char* argv[]) {
   int default_kmin = 1;  // Whether to use default kmin value.
   int default_kmax = 1;
 
-  INIT_WARGV(argc, argv);
-
   if (!WebPConfigInit(&config) || !WebPAnimEncoderOptionsInit(&enc_options) ||
       !WebPPictureInit(&frame) || !WebPPictureInit(&curr_canvas) ||
       !WebPPictureInit(&prev_canvas)) {
     fprintf(stderr, "Error! Version mismatch!\n");
-    FREE_WARGV_AND_RETURN(-1);
+    return -1;
   }
   config.lossless = 1;  // Use lossless compression by default.
 
@@ -150,16 +147,16 @@ int main(int argc, const char* argv[]) {
 
   if (argc == 1) {
     Help();
-    FREE_WARGV_AND_RETURN(0);
+    return 0;
   }
 
   for (c = 1; c < argc; ++c) {
     int parse_error = 0;
     if (!strcmp(argv[c], "-h") || !strcmp(argv[c], "-help")) {
       Help();
-      FREE_WARGV_AND_RETURN(0);
+      return 0;
     } else if (!strcmp(argv[c], "-o") && c < argc - 1) {
-      out_file = GET_WARGV(argv, ++c);
+      out_file = argv[++c];
     } else if (!strcmp(argv[c], "-lossy")) {
       config.lossless = 0;
     } else if (!strcmp(argv[c], "-mixed")) {
@@ -216,7 +213,7 @@ int main(int argc, const char* argv[]) {
           fprintf(stderr, "Error! Unknown metadata type '%.*s'\n",
                   (int)(token - start), start);
           Help();
-          FREE_WARGV_AND_RETURN(-1);
+          return -1;
         }
         start = token + 1;
       }
@@ -229,7 +226,7 @@ int main(int argc, const char* argv[]) {
              (enc_version >> 16) & 0xff, (enc_version >> 8) & 0xff,
              enc_version & 0xff, (mux_version >> 16) & 0xff,
              (mux_version >> 8) & 0xff, mux_version & 0xff);
-      FREE_WARGV_AND_RETURN(0);
+      return 0;
     } else if (!strcmp(argv[c], "-quiet")) {
       quiet = 1;
       enc_options.verbose = 0;
@@ -237,19 +234,19 @@ int main(int argc, const char* argv[]) {
       verbose = 1;
       enc_options.verbose = 1;
     } else if (!strcmp(argv[c], "--")) {
-      if (c < argc - 1) in_file = GET_WARGV(argv, ++c);
+      if (c < argc - 1) in_file = argv[++c];
       break;
     } else if (argv[c][0] == '-') {
       fprintf(stderr, "Error! Unknown option '%s'\n", argv[c]);
       Help();
-      FREE_WARGV_AND_RETURN(-1);
+      return -1;
     } else {
-      in_file = GET_WARGV(argv, c);
+      in_file = argv[c];
     }
 
     if (parse_error) {
       Help();
-      FREE_WARGV_AND_RETURN(-1);
+      return -1;
     }
   }
 
@@ -273,7 +270,13 @@ int main(int argc, const char* argv[]) {
   }
 
   // Start the decoder object
-  gif = DGifOpenFileUnicode(in_file, &gif_error);
+#if LOCAL_GIF_PREREQ(5,0)
+  gif = !strcmp(in_file, "-") ? DGifOpenFileHandle(STDIN_FILENO, &gif_error)
+                              : DGifOpenFileName(in_file, &gif_error);
+#else
+  gif = !strcmp(in_file, "-") ? DGifOpenFileHandle(STDIN_FILENO)
+                              : DGifOpenFileName(in_file);
+#endif
   if (gif == NULL) goto End;
 
   // Loop over GIF images
@@ -379,7 +382,7 @@ int main(int argc, const char* argv[]) {
       }
       case EXTENSION_RECORD_TYPE: {
         int extension;
-        GifByteType* data = NULL;
+        GifByteType *data = NULL;
         if (DGifGetExtension(gif, &extension, &data) == GIF_ERROR) {
           goto End;
         }
@@ -475,7 +478,7 @@ int main(int argc, const char* argv[]) {
         stored_loop_count = 1;
         loop_count = 1;
       }
-    } else if (loop_count > 0 && loop_count < 65535) {
+    } else if (loop_count > 0) {
       // adapt GIF's semantic to WebP's (except in the infinite-loop case)
       loop_count += 1;
     }
@@ -542,18 +545,17 @@ int main(int argc, const char* argv[]) {
   }
 
   if (out_file != NULL) {
-    if (!ImgIoUtilWriteFile((const char*)out_file, webp_data.bytes,
-                            webp_data.size)) {
-      WFPRINTF(stderr, "Error writing output file: %s\n", out_file);
+    if (!ImgIoUtilWriteFile(out_file, webp_data.bytes, webp_data.size)) {
+      fprintf(stderr, "Error writing output file: %s\n", out_file);
       goto End;
     }
     if (!quiet) {
-      if (!WSTRCMP(out_file, "-")) {
+      if (!strcmp(out_file, "-")) {
         fprintf(stderr, "Saved %d bytes to STDIO\n",
                 (int)webp_data.size);
       } else {
-        WFPRINTF(stderr, "Saved output file (%d bytes): %s\n",
-                 (int)webp_data.size, out_file);
+        fprintf(stderr, "Saved output file (%d bytes): %s\n",
+                (int)webp_data.size, out_file);
       }
     }
   } else {
@@ -576,6 +578,7 @@ int main(int argc, const char* argv[]) {
   WebPPictureFree(&curr_canvas);
   WebPPictureFree(&prev_canvas);
   WebPAnimEncoderDelete(enc);
+  if (out != NULL && out_file != NULL) fclose(out);
 
   if (gif_error != GIF_OK) {
     GIFDisplayError(gif, gif_error);
@@ -588,12 +591,12 @@ int main(int argc, const char* argv[]) {
 #endif
   }
 
-  FREE_WARGV_AND_RETURN(!ok);
+  return !ok;
 }
 
 #else  // !WEBP_HAVE_GIF
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
   fprintf(stderr, "GIF support not enabled in %s.\n", argv[0]);
   (void)argc;
   return 0;
