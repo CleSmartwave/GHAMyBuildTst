@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A81D74227BD1D1200207355 /* WebPRequestHeaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A81D74127BD1D1200207355 /* WebPRequestHeaders.framework */; };
+		3A81D74327BD1D1200207355 /* WebPRequestHeaders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A81D74127BD1D1200207355 /* WebPRequestHeaders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A8B392527BCCBAF0034BC72 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */; };
 		3A8B392627BCCBAF0034BC72 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A8B392A27BCCBB10034BC72 /* Nuke.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */; };
@@ -50,6 +52,7 @@
 				3A8B392B27BCCBB10034BC72 /* Nuke.xcframework in Embed Frameworks */,
 				3A8B392F27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Embed Frameworks */,
 				3A8B392627BCCBAF0034BC72 /* Alamofire.xcframework in Embed Frameworks */,
+				3A81D74327BD1D1200207355 /* WebPRequestHeaders.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A81D74127BD1D1200207355 /* WebPRequestHeaders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WebPRequestHeaders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A8B391B27BCCBAB0034BC72 /* NukeWebPPlugin.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NukeWebPPlugin.xcframework; path = Carthage/Build/NukeWebPPlugin.xcframework; sourceTree = SOURCE_ROOT; };
 		3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nuke.xcframework; path = Carthage/Build/Nuke.xcframework; sourceTree = SOURCE_ROOT; };
 		3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = SOURCE_ROOT; };
@@ -84,6 +88,7 @@
 				3A8B392527BCCBAF0034BC72 /* Alamofire.xcframework in Frameworks */,
 				3A8B392E27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Frameworks */,
 				3A8B392A27BCCBB10034BC72 /* Nuke.xcframework in Frameworks */,
+				3A81D74227BD1D1200207355 /* WebPRequestHeaders.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +109,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A81D74027BD1D1200207355 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3A81D74127BD1D1200207355 /* WebPRequestHeaders.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3AF9E8FF27BCBEA9006209B3 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +124,7 @@
 				3AF9E92127BCBEAB006209B3 /* GHAMyBuildTstTests */,
 				3AF9E92C27BCBEAB006209B3 /* GHAMyBuildTstUITests */,
 				3AF9E90927BCBEA9006209B3 /* Products */,
+				3A81D74027BD1D1200207355 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -470,7 +484,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GHAMyBuildTst/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -489,7 +503,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GHAMyBuildTst/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

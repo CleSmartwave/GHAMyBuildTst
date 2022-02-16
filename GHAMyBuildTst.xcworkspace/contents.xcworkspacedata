@@ -5,6 +5,9 @@
       location = "container:"
       name = "Submodules">
       <FileRef
+         location = "group:Submodules/WebPRequestHeaders/WebPRequestHeaders.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Submodules/submod1/submod1.xcodeproj">
       </FileRef>
    </Group>

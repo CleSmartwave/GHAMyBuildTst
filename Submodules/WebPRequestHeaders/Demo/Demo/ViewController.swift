@@ -1,21 +1,20 @@
 //
 //  ViewController.swift
-//  GHAMyBuildTst
+//  Demo
 //
-//  Created by Cle Trinidad on 2/16/22.
+//  Created by Pat Osorio on 3/11/20.
+//  Copyright © 2020 Pat Osorio. All rights reserved.
 //
 
 import UIKit
-import Nuke
-import NukeWebPPlugin
-import Alamofire
 import WebPRequestHeaders
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let asd = URL(string: "")?.setRequestWebPHeaders()
     }
 
 
