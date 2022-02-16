@@ -34,4 +34,4 @@ jobs:
         run: xcodebuild clean -workspace "GHAMyBuildTst.xcworkspace" -scheme "GHAMyBuildTst"
         
       - name: Build App
-        run: xcodebuild -workspace "GHAMyBuildTst.xcworkspace" -scheme "GHAMyBuildTst" -destination "platform=iOS Simulator,name=iPhone 12,OS=14.4" -configuration Release build CODE_SIGNING_ALLOWED=NO
+        run: xcodebuild -workspace "GHAMyBuildTst.xcworkspace" -scheme "GHAMyBuildTst" -destination "platform=iOS Simulator,name=iPhone 12,OS=14.4" -configuration Debug build CODE_SIGNING_ALLOWED=NO
