@@ -13,18 +13,21 @@ import UIKit
 extension URL {
     
     public func setRequestWebPHeaders() -> ImageRequest {
-        var request = URLRequest(url: self)
-        return ImageRequest(urlRequest: setWebPUrlRequest(urlRequest: &request))
+        var request = ImageRequest(url: self)
+        request.urlRequest = setWebPUrlRequest(imageRequest: request)
+        return request
     }
     
     public func setRequestWebPHeaders(withRoundedCorners radius: CGFloat) -> ImageRequest {
-        var request = URLRequest(url: self)
-        return ImageRequest(urlRequest: setWebPUrlRequest(urlRequest: &request), processors: [
-            ImageProcessors.RoundedCorners(radius: radius)
+        var request = ImageRequest(url: self, processors: [
+            ImageProcessor.RoundedCorners(radius: radius)
         ])
+        request.urlRequest = setWebPUrlRequest(imageRequest: request)
+        return request
     }
     
-    private func setWebPUrlRequest(urlRequest: inout URLRequest) -> URLRequest {
+    private func setWebPUrlRequest(imageRequest: ImageRequest) -> URLRequest {
+        var urlRequest = imageRequest.urlRequest
         urlRequest.setValue("image/webp", forHTTPHeaderField: "Accept")
         urlRequest.setValue(getUserAgent(), forHTTPHeaderField: "User-Agent")
         return urlRequest
