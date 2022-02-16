@@ -1,0 +1,19 @@
+{
+  "commitish" : "4.9.1",
+  "iOS" : [
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "ad8e47fc072c5794f2f8c5c00a5d54fc312eda8ff7c9c70cb5bbbb39d71e31b9",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
+      "hash" : "ca27310c10061c9a7aa4c0e1d11ff7c0f0dddd9a3b320fd6f6db054e91841530",
+      "name" : "Alamofire",
+      "container" : "Alamofire.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    }
+  ]
+}

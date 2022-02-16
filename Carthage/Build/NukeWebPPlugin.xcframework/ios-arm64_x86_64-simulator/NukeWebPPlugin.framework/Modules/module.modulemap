@@ -1,0 +1,12 @@
+framework module NukeWebPPlugin {
+    umbrella header "Nuke_WebP_Plugin.h"
+
+    export *
+    module * { export * }
+}
+
+
+module NukeWebPPlugin.Swift {
+    header "NukeWebPPlugin-Swift.h"
+    requires objc
+}
