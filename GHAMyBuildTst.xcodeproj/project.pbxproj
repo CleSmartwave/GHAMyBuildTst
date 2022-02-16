@@ -3,10 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A8B392527BCCBAF0034BC72 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */; };
+		3A8B392627BCCBAF0034BC72 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A8B392A27BCCBB10034BC72 /* Nuke.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */; };
+		3A8B392B27BCCBB10034BC72 /* Nuke.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3A8B392E27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391B27BCCBAB0034BC72 /* NukeWebPPlugin.xcframework */; };
+		3A8B392F27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391B27BCCBAB0034BC72 /* NukeWebPPlugin.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3AF9E90C27BCBEA9006209B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9E90B27BCBEA9006209B3 /* AppDelegate.swift */; };
 		3AF9E90E27BCBEA9006209B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9E90D27BCBEA9006209B3 /* SceneDelegate.swift */; };
 		3AF9E91027BCBEA9006209B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF9E90F27BCBEA9006209B3 /* ViewController.swift */; };
@@ -34,7 +40,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3A8B392727BCCBB00034BC72 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3A8B392B27BCCBB10034BC72 /* Nuke.xcframework in Embed Frameworks */,
+				3A8B392F27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Embed Frameworks */,
+				3A8B392627BCCBAF0034BC72 /* Alamofire.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		3A8B391B27BCCBAB0034BC72 /* NukeWebPPlugin.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NukeWebPPlugin.xcframework; path = Carthage/Build/NukeWebPPlugin.xcframework; sourceTree = SOURCE_ROOT; };
+		3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nuke.xcframework; path = Carthage/Build/Nuke.xcframework; sourceTree = SOURCE_ROOT; };
+		3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = SOURCE_ROOT; };
 		3AF9E90827BCBEA9006209B3 /* GHAMyBuildTst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHAMyBuildTst.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AF9E90B27BCBEA9006209B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AF9E90D27BCBEA9006209B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +81,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8B392527BCCBAF0034BC72 /* Alamofire.xcframework in Frameworks */,
+				3A8B392E27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Frameworks */,
+				3A8B392A27BCCBB10034BC72 /* Nuke.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +127,9 @@
 		3AF9E90A27BCBEA9006209B3 /* GHAMyBuildTst */ = {
 			isa = PBXGroup;
 			children = (
+				3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */,
+				3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */,
+				3A8B391B27BCCBAB0034BC72 /* NukeWebPPlugin.xcframework */,
 				3AF9E90B27BCBEA9006209B3 /* AppDelegate.swift */,
 				3AF9E90D27BCBEA9006209B3 /* SceneDelegate.swift */,
 				3AF9E90F27BCBEA9006209B3 /* ViewController.swift */,
@@ -138,6 +169,7 @@
 				3AF9E90427BCBEA9006209B3 /* Sources */,
 				3AF9E90527BCBEA9006209B3 /* Frameworks */,
 				3AF9E90627BCBEA9006209B3 /* Resources */,
+				3A8B392727BCCBB00034BC72 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -438,6 +470,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GHAMyBuildTst/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,6 +489,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = GHAMyBuildTst/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

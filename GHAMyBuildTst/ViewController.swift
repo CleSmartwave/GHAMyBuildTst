@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Nuke
+import NukeWebPPlugin
+import Alamofire
 
 class ViewController: UIViewController {
 
