@@ -5,6 +5,9 @@
       location = "container:"
       name = "Submodules">
       <FileRef
+         location = "group:Submodules/iOSCreditCardFormComponent/CreditCardFormComponent.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Submodules/WebPRequestHeaders/WebPRequestHeaders.xcodeproj">
       </FileRef>
       <FileRef

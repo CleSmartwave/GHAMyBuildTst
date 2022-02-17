@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A27477127BDC87500749894 /* BraintreeUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A27476D27BDC86F00749894 /* BraintreeUIKit.xcframework */; };
+		3A27477227BDC87500749894 /* BraintreeUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A27476D27BDC86F00749894 /* BraintreeUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A81D74227BD1D1200207355 /* WebPRequestHeaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A81D74127BD1D1200207355 /* WebPRequestHeaders.framework */; };
 		3A81D74327BD1D1200207355 /* WebPRequestHeaders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A81D74127BD1D1200207355 /* WebPRequestHeaders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3A8B392527BCCBAF0034BC72 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */; };
@@ -49,6 +51,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3A27477227BDC87500749894 /* BraintreeUIKit.xcframework in Embed Frameworks */,
 				3A8B392B27BCCBB10034BC72 /* Nuke.xcframework in Embed Frameworks */,
 				3A8B392F27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Embed Frameworks */,
 				3A8B392627BCCBAF0034BC72 /* Alamofire.xcframework in Embed Frameworks */,
@@ -60,6 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A27476D27BDC86F00749894 /* BraintreeUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = BraintreeUIKit.xcframework; path = ExternalXCFrameworks/BraintreeUIKit.xcframework; sourceTree = SOURCE_ROOT; };
 		3A81D74127BD1D1200207355 /* WebPRequestHeaders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WebPRequestHeaders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A8B391B27BCCBAB0034BC72 /* NukeWebPPlugin.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NukeWebPPlugin.xcframework; path = Carthage/Build/NukeWebPPlugin.xcframework; sourceTree = SOURCE_ROOT; };
 		3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nuke.xcframework; path = Carthage/Build/Nuke.xcframework; sourceTree = SOURCE_ROOT; };
@@ -85,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A27477127BDC87500749894 /* BraintreeUIKit.xcframework in Frameworks */,
 				3A8B392527BCCBAF0034BC72 /* Alamofire.xcframework in Frameworks */,
 				3A8B392E27BCCBB20034BC72 /* NukeWebPPlugin.xcframework in Frameworks */,
 				3A8B392A27BCCBB10034BC72 /* Nuke.xcframework in Frameworks */,
@@ -141,6 +146,7 @@
 		3AF9E90A27BCBEA9006209B3 /* GHAMyBuildTst */ = {
 			isa = PBXGroup;
 			children = (
+				3A27476D27BDC86F00749894 /* BraintreeUIKit.xcframework */,
 				3A8B391D27BCCBAC0034BC72 /* Alamofire.xcframework */,
 				3A8B391C27BCCBAC0034BC72 /* Nuke.xcframework */,
 				3A8B391B27BCCBAB0034BC72 /* NukeWebPPlugin.xcframework */,
