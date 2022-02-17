@@ -16,14 +16,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-#       - name: Carthage Cache
-#         id: carthage-cache
-#         uses: actions/cache@v2
-#         with:
-#           path: Carthage
-#           key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
-#           restore-keys: |
-#             ${{ runner.os }}-carthage-
+      - name: Carthage Cache
+        id: carthage-cache
+        uses: actions/cache@v2
+        with:
+          path: Carthage
+          key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-carthage-
       - name: Carthage Bootstrap
         if: steps.carthage-cache.outputs.cache-hit != 'true'
         uses: olejnjak/carthage-workaround@v1
