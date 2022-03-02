@@ -1,0 +1,44 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+<<<<<<< Updated upstream
+=======
+  fastlane_require 'dotenv'
+
+  before_all do
+    Dotenv.overload '.env.secret'
+  end
+
+>>>>>>> Stashed changes
+  desc "Build and distribute app"
+  lane :distribute do
+    # add actions here: https://docs.fastlane.tools/actions
+
+    #firebase_app_distribution(
+    #    app: "1:474505652333:ios:bf9a9f7b49240767",
+    #    testers: "cle@smartwave.ph",
+    #    release_notes: "Testing out fastlane thru firebase app distribution!"
+    #)
+  end
+
+  lane :upload do
+	app_store_connect_api_key
+	build_app
+	upload_to_testflight
+  end
+end
