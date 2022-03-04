@@ -1,19 +1,19 @@
 {
-  "commitish" : "v6.0.1-fork",
+  "commitish" : "ab2eba5a647d55e6acc7d3479d8950021f4a5411",
   "iOS" : [
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "821ed5da935896bb77fc07a9cec0f6c5b70f874f4244a6df19d70225418ffb13",
+      "hash" : "cd184bb5d8403d877b3bb7c44c37fc4bd7c73e2cf143a7cf550908dac0d2a7e6",
       "name" : "NukeWebPPlugin",
       "container" : "NukeWebPPlugin.xcframework",
-      "identifier" : "ios-arm64_x86_64-simulator"
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
     },
     {
       "swiftToolchainVersion" : "5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)",
-      "hash" : "058fa94a64dba641e02c135d78d0b97ad68b4619ce0683eecf9be2559ee1a227",
+      "hash" : "a30bbf5c6f16ac8f44911e7db2625a7d5d2b1b953c07491c6e569aca7bc8e726",
       "name" : "NukeWebPPlugin",
       "container" : "NukeWebPPlugin.xcframework",
-      "identifier" : "ios-arm64"
+      "identifier" : "ios-arm64_armv7"
     }
   ]
 }
