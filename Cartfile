@@ -1,3 +1,5 @@
 github "Alamofire/Alamofire" ~> 4.7.2
 github "kean/Nuke" "8.4.1"
 github "swph-mobile/Nuke-WebP-Plugin" "v4.0.0-fork"
+github "soffes/Crypto" "v0.6.0"
+github "soffes/CommonCrypto" "v1.1.0"

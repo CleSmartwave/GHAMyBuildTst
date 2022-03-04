@@ -16,15 +16,12 @@
 default_platform(:ios)
 
 platform :ios do
-<<<<<<< Updated upstream
-=======
   fastlane_require 'dotenv'
 
   before_all do
     Dotenv.overload '.env.secret'
   end
 
->>>>>>> Stashed changes
   desc "Build and distribute app"
   lane :distribute do
     # add actions here: https://docs.fastlane.tools/actions
