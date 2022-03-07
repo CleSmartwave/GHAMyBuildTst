@@ -1,5 +1,6 @@
 git "https://chromium.googlesource.com/webm/libwebp" "v1.0.0"
 github "Alamofire/Alamofire" "4.9.1"
+github "facebook/facebook-ios-sdk" "v9.0.0"
 github "kean/Nuke" "8.4.1"
 github "soffes/CommonCrypto" "v1.1.0"
 github "soffes/Crypto" "v0.6.0"
