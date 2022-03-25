@@ -1,6 +1,10 @@
 github "Alamofire/Alamofire" ~> 4.7.2
+github "Alamofire/AlamofireImage" ~> 3.3.1
+github "SwiftyJSON/SwiftyJSON" "4.1.0"
+github "KennethTsang/GrowingTextView" ~> 0.5
+github "fjcaetano/ReCaptcha" "1.6.0"
+github "stripe/stripe-ios" "v19.3.0"
 github "kean/Nuke" "8.4.1"
 github "swph-mobile/Nuke-WebP-Plugin" "v4.0.0-fork"
-github "soffes/Crypto" "v0.6.0"
-github "soffes/CommonCrypto" "v1.1.0"
-github "swph-mobile/facebook-ios-sdk" "v9.0.0-fork"
+github "swph-mobile/facebook-ios-sdk" "v11.0.1-fork"
+github "krzyzanowskim/CryptoSwift" "1.4.3"

@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/NukeWebPPlugin-Swift.h</key>
 		<data>
-		dYCkMwlEhfGoPLMzANU8DXG54l8=
+		oPkU98RzJUVk0ek3b4px7slpWTU=
 		</data>
 		<key>Headers/Nuke_WebP_Plugin.h</key>
 		<data>
@@ -22,79 +22,79 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		mxwenUzESUvDYBH9uMstQixF9ec=
+		UQqIgVBrxWTTEQmZvlY6HbXUnl8=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		CoVH33n34QQ21wV5/iFynpuymmY=
+		+HgXAUx3OBMEWC+njlYE7BPv15k=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<data>
-		CoVH33n34QQ21wV5/iFynpuymmY=
+		+HgXAUx3OBMEWC+njlYE7BPv15k=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/i386-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		r3hk3nFNpLIM2M8N8oX07OyMyMw=
+		tqkQpqze31A278vV+YP77cyTVHs=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/i386.swiftsourceinfo</key>
 		<data>
-		r3hk3nFNpLIM2M8N8oX07OyMyMw=
+		tqkQpqze31A278vV+YP77cyTVHs=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		8Rj7Y+I4JFLUrxhA1SS547PewJU=
+		whoqNkweP6W1kaQF23hskVt/3iI=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<data>
-		8Rj7Y+I4JFLUrxhA1SS547PewJU=
+		whoqNkweP6W1kaQF23hskVt/3iI=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		22aABze2yOyIlGRAM8eFSH5Mb1E=
+		H8NH4+TrmD531gpc/UqvOnQN1oA=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		M6RXfSktQioYI1TLufxTPz61uxs=
+		NllYTgz6qEGa5DAXhCndDdi3byo=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		22aABze2yOyIlGRAM8eFSH5Mb1E=
+		H8NH4+TrmD531gpc/UqvOnQN1oA=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		M6RXfSktQioYI1TLufxTPz61uxs=
+		NllYTgz6qEGa5DAXhCndDdi3byo=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<data>
-		pH20mKSXFCHL0ReveQT6tPbfroM=
+		rXffUUpu1SvGl58mvZTt9d3s60E=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<data>
-		J49YUQN7AKClmmsPZrWFSJ+J6tA=
+		cOBSusnuQiDufqm8DKYZFS/m/9o=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386.swiftdoc</key>
 		<data>
-		pH20mKSXFCHL0ReveQT6tPbfroM=
+		rXffUUpu1SvGl58mvZTt9d3s60E=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386.swiftmodule</key>
 		<data>
-		J49YUQN7AKClmmsPZrWFSJ+J6tA=
+		cOBSusnuQiDufqm8DKYZFS/m/9o=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		1KDGoH9uxltiRmRKiVQUMrDisbQ=
+		lvHLRbjhb+Z3U/atgg0uaALEAZ8=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		R9hejaEBKUnMUC4NEIB+Vln2Q3Y=
+		AY7xq3hgVLXaHCZEW3MkKejGlbM=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		1KDGoH9uxltiRmRKiVQUMrDisbQ=
+		lvHLRbjhb+Z3U/atgg0uaALEAZ8=
 		</data>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		R9hejaEBKUnMUC4NEIB+Vln2Q3Y=
+		AY7xq3hgVLXaHCZEW3MkKejGlbM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -279,11 +279,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dYCkMwlEhfGoPLMzANU8DXG54l8=
+			oPkU98RzJUVk0ek3b4px7slpWTU=
 			</data>
 			<key>hash2</key>
 			<data>
-			DyURgHqmE/7z2NEv+/pBsDddYIEj+xIQQ285q2SxIII=
+			pCAyObKSUb2aEPPvAAT89fvQM8OQ/h9OYUqA2cObG10=
 			</data>
 		</dict>
 		<key>Headers/Nuke_WebP_Plugin.h</key>
@@ -323,198 +323,198 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			CoVH33n34QQ21wV5/iFynpuymmY=
+			+HgXAUx3OBMEWC+njlYE7BPv15k=
 			</data>
 			<key>hash2</key>
 			<data>
-			pD+onEq4x2dQxfTA9zNqpGBKnHpSVcbXJ6sPxsFwGKs=
+			okGlcBmFp2zsH4MuRcUpi2hyWrMEHKyvgX6rgZmEWA4=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CoVH33n34QQ21wV5/iFynpuymmY=
+			+HgXAUx3OBMEWC+njlYE7BPv15k=
 			</data>
 			<key>hash2</key>
 			<data>
-			pD+onEq4x2dQxfTA9zNqpGBKnHpSVcbXJ6sPxsFwGKs=
+			okGlcBmFp2zsH4MuRcUpi2hyWrMEHKyvgX6rgZmEWA4=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/i386-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r3hk3nFNpLIM2M8N8oX07OyMyMw=
+			tqkQpqze31A278vV+YP77cyTVHs=
 			</data>
 			<key>hash2</key>
 			<data>
-			JJj30j07eiCFkecBXNlOe3QaoBbCoXYBFG9UIwB4qCA=
+			Ayx7yqtC5o/bNfr3z9M+oRLOjTSM/uiPFa/AXeYCeoc=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/i386.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r3hk3nFNpLIM2M8N8oX07OyMyMw=
+			tqkQpqze31A278vV+YP77cyTVHs=
 			</data>
 			<key>hash2</key>
 			<data>
-			JJj30j07eiCFkecBXNlOe3QaoBbCoXYBFG9UIwB4qCA=
+			Ayx7yqtC5o/bNfr3z9M+oRLOjTSM/uiPFa/AXeYCeoc=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8Rj7Y+I4JFLUrxhA1SS547PewJU=
+			whoqNkweP6W1kaQF23hskVt/3iI=
 			</data>
 			<key>hash2</key>
 			<data>
-			EBboGQzwEjyoXlzViI2lw8CnMsus3BldkkV44lv+h+M=
+			dTT6yYxE/58/uxC9gFpE2y7jar9HA6R6Qw3Bzsgqsng=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/Project/x86_64.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8Rj7Y+I4JFLUrxhA1SS547PewJU=
+			whoqNkweP6W1kaQF23hskVt/3iI=
 			</data>
 			<key>hash2</key>
 			<data>
-			EBboGQzwEjyoXlzViI2lw8CnMsus3BldkkV44lv+h+M=
+			dTT6yYxE/58/uxC9gFpE2y7jar9HA6R6Qw3Bzsgqsng=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			22aABze2yOyIlGRAM8eFSH5Mb1E=
+			H8NH4+TrmD531gpc/UqvOnQN1oA=
 			</data>
 			<key>hash2</key>
 			<data>
-			ycTBLN6IREa9WGCSiGOe4skYc300RcvsB/t+jLYHCAc=
+			YlIf3uWrda3TtUzORgBQhM4xGNRXah1VFhwvRBb3GlI=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			M6RXfSktQioYI1TLufxTPz61uxs=
+			NllYTgz6qEGa5DAXhCndDdi3byo=
 			</data>
 			<key>hash2</key>
 			<data>
-			pptPI/X/+jntBS2hrr4GoLiefdKyGlZc6OJQTYf5Ay8=
+			KECWs1A+IXvfJRZUCIbkguN2rIDJL4/6CwIcsgf3h7c=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			22aABze2yOyIlGRAM8eFSH5Mb1E=
+			H8NH4+TrmD531gpc/UqvOnQN1oA=
 			</data>
 			<key>hash2</key>
 			<data>
-			ycTBLN6IREa9WGCSiGOe4skYc300RcvsB/t+jLYHCAc=
+			YlIf3uWrda3TtUzORgBQhM4xGNRXah1VFhwvRBb3GlI=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			M6RXfSktQioYI1TLufxTPz61uxs=
+			NllYTgz6qEGa5DAXhCndDdi3byo=
 			</data>
 			<key>hash2</key>
 			<data>
-			pptPI/X/+jntBS2hrr4GoLiefdKyGlZc6OJQTYf5Ay8=
+			KECWs1A+IXvfJRZUCIbkguN2rIDJL4/6CwIcsgf3h7c=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pH20mKSXFCHL0ReveQT6tPbfroM=
+			rXffUUpu1SvGl58mvZTt9d3s60E=
 			</data>
 			<key>hash2</key>
 			<data>
-			oLIdPzYz2iuZtk28V1QV4lCMJHFhhmk2Eo6ZgYDkz6E=
+			dWbvRu3HXfJtd+pJfusu90vGXf4Q1f8SrDUCWzA71HE=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			J49YUQN7AKClmmsPZrWFSJ+J6tA=
+			cOBSusnuQiDufqm8DKYZFS/m/9o=
 			</data>
 			<key>hash2</key>
 			<data>
-			Vuad1AH5NCAew47JtmiciLHnllFw3FRipzjPKMwlwT4=
+			xIveA8AhdcL4Rp33djPM/qkJ7/+2JAJCRVWgNCcWxQo=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pH20mKSXFCHL0ReveQT6tPbfroM=
+			rXffUUpu1SvGl58mvZTt9d3s60E=
 			</data>
 			<key>hash2</key>
 			<data>
-			oLIdPzYz2iuZtk28V1QV4lCMJHFhhmk2Eo6ZgYDkz6E=
+			dWbvRu3HXfJtd+pJfusu90vGXf4Q1f8SrDUCWzA71HE=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/i386.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			J49YUQN7AKClmmsPZrWFSJ+J6tA=
+			cOBSusnuQiDufqm8DKYZFS/m/9o=
 			</data>
 			<key>hash2</key>
 			<data>
-			Vuad1AH5NCAew47JtmiciLHnllFw3FRipzjPKMwlwT4=
+			xIveA8AhdcL4Rp33djPM/qkJ7/+2JAJCRVWgNCcWxQo=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1KDGoH9uxltiRmRKiVQUMrDisbQ=
+			lvHLRbjhb+Z3U/atgg0uaALEAZ8=
 			</data>
 			<key>hash2</key>
 			<data>
-			y/KmOjRTDqTcAkVzbaeqOHl63eqVv11YIJ/GwQ9w0kI=
+			+vMXgR7mM44nATe+BvnhrEbDeNN+MKw2SFJm2OqVw0I=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			R9hejaEBKUnMUC4NEIB+Vln2Q3Y=
+			AY7xq3hgVLXaHCZEW3MkKejGlbM=
 			</data>
 			<key>hash2</key>
 			<data>
-			3QlnqMswCqm1m0q6iQKCVtg6OJkPyHi0izcLE+nkt4o=
+			KQYStWO9p4vfaOAwSCIknGTJ5tN5sFH3/JCUp0+m1+0=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1KDGoH9uxltiRmRKiVQUMrDisbQ=
+			lvHLRbjhb+Z3U/atgg0uaALEAZ8=
 			</data>
 			<key>hash2</key>
 			<data>
-			y/KmOjRTDqTcAkVzbaeqOHl63eqVv11YIJ/GwQ9w0kI=
+			+vMXgR7mM44nATe+BvnhrEbDeNN+MKw2SFJm2OqVw0I=
 			</data>
 		</dict>
 		<key>Modules/NukeWebPPlugin.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			R9hejaEBKUnMUC4NEIB+Vln2Q3Y=
+			AY7xq3hgVLXaHCZEW3MkKejGlbM=
 			</data>
 			<key>hash2</key>
 			<data>
-			3QlnqMswCqm1m0q6iQKCVtg6OJkPyHi0izcLE+nkt4o=
+			KQYStWO9p4vfaOAwSCIknGTJ5tN5sFH3/JCUp0+m1+0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
